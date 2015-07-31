@@ -1,7 +1,7 @@
 class CreateHubs < ActiveRecord::Migration
   def up
     create_table :hubs do |t|
-      t.point :center
+      t.column "center", :point
       t.integer :zoom
       t.integer :radius
       t.string :name
