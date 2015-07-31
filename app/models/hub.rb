@@ -10,4 +10,6 @@ class Hub < ActiveRecord::Base
   def longitude
     center.x
   end
+
+  attr_accessible :name, :city_state, :center, :zoom, :radius
 end

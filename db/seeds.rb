@@ -17,7 +17,12 @@ User.delete_all()
 email = ENV['ADMIN_USERNAME'] && ENV['ADMIN_USERNAME'].dup
 password = ENV['ADMIN_PASSWORD'] && ENV['ADMIN_PASSWORD'].dup
 password ||= 'password'
-admin = User.find_or_create_by_email(:email => email || 'admin@localhost.com', :password => password, :password_confirmation => password, :name => 'Admin')
+admin = User.find_or_create_by(:email => email || 'admin@localhost.com')
+admin.password = password
+admin.password_confirmation = password
+admin.name = 'Admin'
+admin.save
+admin.confirm!
 admin.roles << Role.find_by_name('SuperAdmin')
 
 Skill.delete_all()
@@ -55,7 +60,7 @@ Neighborhood.delete_all()
     city = neighborhood.properties['CITY']
     name = neighborhood.properties['NAME']
     neighborhood = Neighborhood.create(:state => state, :county => county, :city => city, :name => name, :region => neighborhood.geometry)
-    ActiveRecord::Base.connection.execute("UPDATE Neighborhoods SET center=Centroid(region) WHERE id=#{neighborhood.id}")
+    ActiveRecord::Base.connection.execute("UPDATE neighborhoods SET center=Centroid(region) WHERE id=#{neighborhood.id}")
   end
 end
 
@@ -142,6 +147,7 @@ if Rails.env.development?
   users = User.create(config['users'])
   users.each do |u|
     u.neighborhood = Neighborhood.all.sample
+    u.confirm!
     u.save
   end
 
