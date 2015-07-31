@@ -1,5 +1,6 @@
 class AddIlNeighborhoods < ActiveRecord::Migration
   class Neighborhood < ActiveRecord::Base
+    attr_accessible :state, :county, :city, :name, :region
   end
 
   def change
