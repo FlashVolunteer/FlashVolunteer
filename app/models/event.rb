@@ -15,6 +15,11 @@ class Event < ActiveRecord::Base
   has_many :participations
   accepts_nested_attributes_for :participations
 
+
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :featured, :vm_id, :name, :website, :hosted_by, :street, :latitude, :longitude, :moved_marker, :max_users, :description, :special_instructions, :skill_ids, :affiliate_ids, :start, :end
+
+
   has_many :participants, :through => :participations, :source => :user
   has_and_belongs_to_many :skills, :join_table => 'skills_events'
   has_many :event_affiliations
@@ -112,10 +117,10 @@ class Event < ActiveRecord::Base
     where('featured = ?', true)
   }
   scope :recommended_to, lambda { |user|
-    if user.skills.count > 0
-      includes(:affiliates, :skills, :user).not_attended_by(user).upcoming.joins(:skills).where{skills.id.eq_any user.skills}.order('start asc')
-    else
+    if user.skills.empty?
       includes(:affiliates, :skills, :user).not_attended_by(user).upcoming.order('start asc')
+    else
+      includes(:affiliates, :skills, :user).not_attended_by(user).upcoming.joins(:skills).where{skills.id.eq_any user.skills}.order('start asc')
     end
   }
   scope :in_neighborhood, lambda { |neighborhood|

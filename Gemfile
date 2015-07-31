@@ -1,8 +1,8 @@
-ruby '1.9.3'
+ruby '2.2.2'
 source 'http://rubygems.org'
 
 gem 'rails', '4.2.1'
-gem 'json', '~> 1.7.7'
+gem 'json', '~> 1.8.3'
 
 # Pagination
 gem 'will_paginate', '~> 3.0'
@@ -14,7 +14,7 @@ gem 'cancan', '= 1.6.9'
 gem 'geocoder', '~> 1.2'
 gem 'geoip', '~> 1.4'
 # JQuery
-gem 'jquery-rails', '~> 4.0' 
+gem 'jquery-rails', '~> 4.0'
 # Not sure why directly gem'd
 gem 'tlsmail'
 # DatePicker
@@ -29,6 +29,8 @@ gem "squeel"
 gem 'rails_admin', '~> 0.6'
 # API
 gem 'grape'
+# WEBrick is no longer used; thin now.
+gem 'thin'
 
 # Delayed Jobs
 gem 'delayed_job_active_record', '~> 4.0'
@@ -45,8 +47,9 @@ gem 'tzinfo-data'
 gem 'execjs', '<= 2.2'
 gem 'coffee-script-source', '<= 1.8'
 
-gem 'sass', '~> 3.4'
-gem 'sass-rails', '~> 5.0'
+gem 'sprockets-rails', '>= 2.1.4'
+gem 'bootstrap-sass', '~> 3.3.4'
+gem 'sass-rails', '>= 3.2'
 gem 'compass', '~> 1.0'
 
 gem 'aws-sdk', '< 2.0'
@@ -61,8 +64,8 @@ gem 'wicked'
 gem 'classy_enum', '~> 2.0.3'
 
 gem 'sinatra', '1.0'
-gem 'date_validator'
-gem 'mysql2'
+gem 'date_validator', '0.7.1'
+gem 'mysql2', '=0.3.18'
 
 gem 'rgeo'
 gem 'rgeo-geojson'
@@ -71,7 +74,8 @@ gem 'rgeo-geojson'
 gem 'protected_attributes'
 
 # Source'd because this is the only repository which contains fixes for Rails 4.
-gem 'activerecord-mysql2spatial-adapter', :git => "https://github.com/fjl82/activerecord-mysql2spatial-adapter"
+# See https://github.com/rgeo/activerecord-mysql2spatial-adapter/issues/12
+gem 'activerecord-mysql2spatial-adapter', :git => "https://github.com/agoln/activerecord-mysql2spatial-adapter/", :branch => "reorder_map_initialization"
 
 gem 'newrelic_rpm'
 
