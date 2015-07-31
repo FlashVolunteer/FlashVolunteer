@@ -102,13 +102,13 @@ class Event < ActiveRecord::Base
     includes(:participants).where('users.id = ?', user.id)
   }
   scope :not_attended_by, lambda { |user|
-    includes(:participants).where("#{user.id} not in (SELECT user_id FROM participations WHERE event_id = events.id)")
+    includes(:participants).where("#{user.id} not in (SELECT user_id FROM participations WHERE event_id = events.id)").references(:participations)
   }
   scope :created_by, lambda { |user|
     where(:creator_id => user.id).order('start asc')
   }
   scope :involving, lambda { |user|
-    includes(:participants).where("participations.user_id = ? or (creator_id = ? AND (hosted_by IS NULL OR hosted_by = ''))", user.id, user.id)
+    includes(:participants).where("participations.user_id = ? or (creator_id = ? AND (hosted_by IS NULL OR hosted_by = ''))", user.id, user.id).references(:participants)
   }
   scope :hosted_by_org_user, lambda { |user_list|
     where{creator_id.eq_any Org.joins(:admins).where{admins_users.id.eq_any user_list}.all}
