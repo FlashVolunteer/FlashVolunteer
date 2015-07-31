@@ -7,14 +7,12 @@ class CreateAffiliates < ActiveRecord::Migration
     end
 
     create_table :user_affiliations do |t|
-      t.primary_key :id
       t.belongs_to :affiliate
       t.belongs_to :user
       t.boolean :moderator
     end
 
     create_table :event_affiliations do |t|
-      t.primary_key :id
       t.belongs_to :affiliate
       t.belongs_to :event
     end
